@@ -1,3 +1,4 @@
+const { request } = require('express');
 const user = require('../models/user');
 const User=require('../models/user');
 
@@ -49,13 +50,15 @@ module.exports.create=function(req,res){
             console.log('error in finding user in signup');
             return;
         }
+        console.log(req.body)
         if(!user){
             User.create(req.body,function(err,user){
                 if(err){
                     console.log('error in creating user while signing up');
                     return;
                 }
-                return res.redirect('/users/sign-in')
+                console.log("user created succesfully");
+                return res.redirect('/users/sign-in');
             })
         }else{
             return res.redirect('back');
@@ -93,4 +96,9 @@ module.exports.createSession=function(req,res){
         }
         
     })
+}
+
+//sign in and create session for the user 
+module.exports.createSession=function(req,res){
+    return res.redirect('/')
 }
